@@ -10,4 +10,6 @@ import moxy.viewstate.strategy.alias.SingleState
 interface AuthorizeView:MvpView {
     @SingleState
     fun startCheck(code:VerificationsModel){}
+    @SingleState
+    fun setTextCode(code:String)
 }

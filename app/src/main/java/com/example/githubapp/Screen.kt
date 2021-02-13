@@ -3,6 +3,7 @@ package com.example.githubapp
 import com.example.githubapp.repositories.ReposFragment
 import com.example.githubapp.authorize.AuthorizeFragment
 import com.example.githubapp.fragments.Fr
+import com.example.githubapp.saveRepos.SaveReposFragment
 import ru.terrakok.cicerone.android.support.SupportAppScreen
 
 
@@ -15,6 +16,9 @@ object Screen {
     }
     object Repos:SupportAppScreen(){
         override fun getFragment() = ReposFragment()
+    }
+    object SaveRepos:SupportAppScreen(){
+        override fun getFragment() = SaveReposFragment()
     }
     //fun g() = com.example.githubapp.Screens(AuthorizeFragment())
 

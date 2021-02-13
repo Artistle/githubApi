@@ -5,11 +5,14 @@ import android.content.SharedPreferences
 import android.net.Uri
 import android.util.Log
 import com.example.githubapp.DI.AppConstants
+import com.example.githubapp.DI.NavigationModule
 import com.example.githubapp.Screen
 import com.example.githubapp.models.AuthorizedDeviceModel
 import com.example.githubapp.models.VerificationsModel
 import com.example.githubapp.presenter.BasePresenter
 import com.example.githubapp.retrofitApi.ConfigApi
+import com.example.githubapp.retrofitApi.configurations.Authorization.checkToken
+import com.example.githubapp.retrofitApi.configurations.Authorization.getObservable
 import com.example.githubapp.system.FlowRouter
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -29,15 +32,18 @@ class AuthorizePresenter():MvpPresenter<AuthorizeView>() {
     @Inject
     lateinit var sharedPreferences: SharedPreferences
 
+    @Inject
+    lateinit var router: Router
+
+
     init {
         Toothpick.inject(this,Toothpick
-                .openScope(AppConstants.APPSCOPE))
+            .openScope(AppConstants.APPSCOPE)
+            .openSubScope("main")
+            .installModules(NavigationModule()))
     }
 
     override fun onFirstViewAttach() { super.onFirstViewAttach() }
-
-//    fun onClick() = router.startFlow(Screens.AuthFlow)
-//    fun onBackPressed() = router.exit()
 
     fun authorizeGithub(){
         getObservable().subscribeWith(getObserver())
@@ -45,40 +51,37 @@ class AuthorizePresenter():MvpPresenter<AuthorizeView>() {
     fun authorizeGmail(){}
     fun authorizeGuest(){}
 
-    fun checkToken(){}
-
-    private fun checkToken(deviceCode:String):Single<AuthorizedDeviceModel>{
-        return ConfigApi()
-            .authorize()
-            .authorizate(deviceCode)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-    }
-    private fun observerCheckToken():DisposableSingleObserver<AuthorizedDeviceModel>{
-        return object : DisposableSingleObserver<AuthorizedDeviceModel>(){
-            override fun onSuccess(t: AuthorizedDeviceModel) {
-
-            }
-
-            override fun onError(e: Throwable) {
-
-            }
-
+    fun getToken(){
+        var code = sharedPreferences.getString("CODE",null)
+        if (code != null) {
+            checkToken(code).subscribeWith(observerCheckToken())
         }
     }
 
+    private fun observerCheckToken():DisposableSingleObserver<AuthorizedDeviceModel>{
+        return object : DisposableSingleObserver<AuthorizedDeviceModel>(){
+            override fun onSuccess(t: AuthorizedDeviceModel) {
+                if(t.access_token.isNullOrBlank()){
 
-    private fun getObservable(): Single<VerificationsModel> {
-        return ConfigApi()
-            .authorize()
-            .verification("88080cc156512ce353ce")
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+                }else{
+                    sharedPreferences.edit().putString("TOKEN",t.access_token).apply()
+                    router.navigateTo(Screen.Repos)
+                }
+
+                Log.i("OBSERVER","$t")
+            }
+
+            override fun onError(e: Throwable) {
+                Log.i("OBSERVER","$e")
+            }
+        }
     }
     private fun getObserver(): DisposableSingleObserver<VerificationsModel> {
         return object : DisposableSingleObserver<VerificationsModel>(){
             override fun onSuccess(t: VerificationsModel) {
                 viewState.startCheck(t)
+                viewState.setTextCode(t.user_code)
+                sharedPreferences.edit().putString("CODE","${t.device_code}").apply()
                 Log.i("OBSERVER","$t")
             }
 

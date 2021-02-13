@@ -34,6 +34,7 @@ class MainPresenter():MvpPresenter<MainView>() {
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         var token = sharedPreferences.getString("TOKEN",null)
+//        sharedPreferences.edit().clear().apply()
         println("$token")
         if(token.isNullOrBlank()){
             replaceAuthorize()
@@ -54,7 +55,7 @@ class MainPresenter():MvpPresenter<MainView>() {
     }
 
     fun onBackPressed(){}
-    fun replaceFavorites(){}
+    fun replaceFavorites(){router.navigateTo(Screen.SaveRepos)}
     fun replaceRepos(){ router.navigateTo(Screen.Repos) }
     fun replaceAccount(){  }
     fun replaceAuthorize(){ router.navigateTo(Screen.AuthFlow) }

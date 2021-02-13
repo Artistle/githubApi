@@ -1,26 +1,18 @@
 package com.example.githubapp.authorize
 
-import android.app.Application
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import com.example.githubapp.R
 import com.example.githubapp.models.VerificationsModel
-import com.example.githubapp.retrofitApi.ConfigApi
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.observers.DisposableObserver
-import io.reactivex.schedulers.Schedulers
-import moxy.InjectViewState
+import com.example.githubapp.utils.hideToolbar
+import com.example.githubapp.utils.showMessage
+import com.google.android.material.tabs.TabLayout
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
-import javax.inject.Inject
 
 class AuthorizeFragment:MvpAppCompatFragment(R.layout.authorize_fragment),AuthorizeView {
 
@@ -33,28 +25,17 @@ class AuthorizeFragment:MvpAppCompatFragment(R.layout.authorize_fragment),Author
         var authorizeGmail = this.activity?.findViewById<Button>(R.id.button_gmail)
         var authorizeGuest = this.activity?.findViewById<Button>(R.id.button_guest)
         authorizeGithub?.setOnClickListener {authorizePresenter.authorizeGithub()}
-        authorizeGmail?.setOnClickListener {}
+        authorizeGmail?.setOnClickListener {showMessage(this.context!!,"в процессе реализации")}
         authorizeGuest?.setOnClickListener {}
+        hideToolbar()
 //        Log.i("OBSERVER","ee")
 //        getObservable().subscribeWith(getObserver())
 
         Log.i("OBSERVER","onStart")
+        authorizePresenter.getToken()
     }
 
 
-    init{
-
-
-    }
-
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return super.onCreateView(inflater, container, savedInstanceState)
-    }
 
     override fun onResume() {
         super.onResume()
@@ -62,8 +43,11 @@ class AuthorizeFragment:MvpAppCompatFragment(R.layout.authorize_fragment),Author
 
     override fun startCheck(code: VerificationsModel) {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(code.verification_uri))
-        println("")
         startActivityForResult(intent,101)
+    }
+
+    override fun setTextCode(code: String) {
+       this?.activity?.findViewById<TextView>(R.id.show_code)?.text = code
     }
 
 }

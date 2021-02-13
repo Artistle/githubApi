@@ -7,7 +7,7 @@ import io.reactivex.Observable
 import io.reactivex.Single
 import retrofit2.http.*
 
-interface Api {
+interface AuthorizateApi {
 
     @Headers("Accept: application/vnd.github.v3+json")
     @FormUrlEncoded
