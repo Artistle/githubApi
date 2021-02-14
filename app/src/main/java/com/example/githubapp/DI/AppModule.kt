@@ -8,6 +8,7 @@ import androidx.room.Room
 import com.example.githubapp.DB.AppDatabase
 import com.example.githubapp.DB.UserDao
 import com.example.githubapp.fragments.BaseFragment
+import io.reactivex.disposables.CompositeDisposable
 import ru.terrakok.cicerone.Cicerone
 import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.Router
@@ -22,6 +23,7 @@ fun AppModule(application: Application) = module {
             AppDatabase::class.java,
             "database_name"
         ).build()
+        val compositeDisposable = CompositeDisposable()
         var sharedPreferences = application.getSharedPreferences("TOKEN",MODE_PRIVATE)
         bind(SharedPreferences::class.java).toInstance(sharedPreferences)
         val dao = db.userDao()
@@ -29,7 +31,7 @@ fun AppModule(application: Application) = module {
         bind(Application::class.java).toInstance(application)
         bind(Context::class.java).toInstance(context)
         bind(BaseFragment::class.java)
-
+        bind(CompositeDisposable::class.java).toInstance(compositeDisposable)
 
         bind(AppDatabase::class.java).toInstance(db)
         bind(UserDao::class.java).toInstance(dao)
