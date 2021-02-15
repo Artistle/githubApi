@@ -1,4 +1,6 @@
 package com.example.githubapp.retrofitApi.configurations
+import com.example.githubapp.models.AuthorizedDeviceModel
+import com.example.githubapp.models.VerificationsModel
 import com.example.githubapp.models.trueModels.ReposModel
 import com.example.githubapp.retrofitApi.ConfigApi
 import io.reactivex.Observable
@@ -22,3 +24,5 @@ object SearchConfig{
             .observeOn(AndroidSchedulers.mainThread())
     }
 }
+
+

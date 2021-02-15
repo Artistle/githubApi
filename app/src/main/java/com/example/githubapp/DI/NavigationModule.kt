@@ -1,6 +1,5 @@
 package com.example.githubapp.DI
 
-import com.example.githubapp.system.FlowRouter
 import ru.terrakok.cicerone.Cicerone
 import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.Router

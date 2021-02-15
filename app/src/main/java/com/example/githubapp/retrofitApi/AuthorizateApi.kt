@@ -2,8 +2,6 @@ package com.example.githubapp.retrofitApi
 
 import com.example.githubapp.models.AuthorizedDeviceModel
 import com.example.githubapp.models.VerificationsModel
-import io.reactivex.Flowable
-import io.reactivex.Observable
 import io.reactivex.Single
 import retrofit2.http.*
 

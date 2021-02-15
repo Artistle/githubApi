@@ -1,31 +1,23 @@
 package com.example.githubapp
 
-import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import androidx.annotation.RequiresApi
-import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import com.example.githubapp.DI.AppConstants
 import com.example.githubapp.DI.NavigationModule
 import com.example.githubapp.databinding.ActivityMainBinding
-import com.example.githubapp.presenter.MainPresenter
-import com.example.githubapp.view.MainView
+import com.example.githubapp.main.MainPresenter
+import com.example.githubapp.main.MainView
 import com.google.android.material.tabs.TabLayout
-import io.reactivex.Observable
-import io.reactivex.ObservableOnSubscribe
 import moxy.MvpAppCompatActivity
 import moxy.presenter.InjectPresenter
 import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.android.support.SupportAppNavigator
 import toothpick.Toothpick
-import java.util.*
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 
-class MainActivity : MvpAppCompatActivity(),MainView {
+class MainActivity : MvpAppCompatActivity(), MainView {
     @InjectPresenter
     lateinit var presenter: MainPresenter
     private lateinit var binding: ActivityMainBinding

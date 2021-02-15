@@ -3,14 +3,12 @@ package com.example.githubapp.authorize
 import android.content.Intent
 import android.net.Uri
 import android.util.Log
-import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import com.example.githubapp.R
 import com.example.githubapp.models.VerificationsModel
 import com.example.githubapp.utils.hideToolbar
 import com.example.githubapp.utils.showMessage
-import com.google.android.material.tabs.TabLayout
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 

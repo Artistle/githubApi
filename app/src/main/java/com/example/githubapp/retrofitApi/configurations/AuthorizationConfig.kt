@@ -7,7 +7,7 @@ import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-object Authorization {
+object AuthorizationConfig {
     fun checkToken(code:String): Single<AuthorizedDeviceModel> {
         return ConfigApi()
             .authorize()
@@ -22,8 +22,4 @@ object Authorization {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
     }
-}
-
-object Verification{
-
 }

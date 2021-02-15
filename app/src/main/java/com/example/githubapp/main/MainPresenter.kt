@@ -1,13 +1,11 @@
-package com.example.githubapp.presenter
+package com.example.githubapp.main
 
 import android.content.SharedPreferences
-import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import com.example.githubapp.DI.AppConstants
 import com.example.githubapp.DI.NavigationModule
 import com.example.githubapp.R
 import com.example.githubapp.Screen
-import com.example.githubapp.view.MainView
 import moxy.InjectViewState
 import moxy.MvpPresenter
 import ru.terrakok.cicerone.Navigator

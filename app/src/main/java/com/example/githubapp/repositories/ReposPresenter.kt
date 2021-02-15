@@ -1,30 +1,31 @@
 package com.example.githubapp.repositories
 
-import android.annotation.SuppressLint
 import android.content.SharedPreferences
 import android.util.Log
-import android.widget.Toast
-import androidx.appcompat.widget.SearchView
+import com.example.githubapp.DB.DBItem
+import com.example.githubapp.DB.UserDao
 import com.example.githubapp.DI.AppConstants
-import com.example.githubapp.DI.NavigationModule
-import com.example.githubapp.models.RepositoryModel
+import com.example.githubapp.models.trueModels.Item
 import com.example.githubapp.models.trueModels.ReposModel
-import com.example.githubapp.retrofitApi.configurations.SearchConfig.search
-import io.reactivex.Observable
-import io.reactivex.ObservableOnSubscribe
+import com.example.githubapp.retrofitApi.configurations.SearchConfig.searchTest
 import io.reactivex.observers.DisposableObserver
+import io.reactivex.observers.DisposableSingleObserver
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import moxy.InjectViewState
 import moxy.MvpPresenter
 import toothpick.Toothpick
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @InjectViewState
 class ReposPresenter(): MvpPresenter<ReposView>() {
 
     @Inject
-    lateinit var sharedPreferences: SharedPreferences
+    lateinit var userDao: UserDao
 
+    @Inject
+    lateinit var sharedPreferences: SharedPreferences
+    //var t = sharedPreferences.getString("TOKEN","")
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         val token = sharedPreferences.getString("TOKEN",null)
@@ -36,20 +37,13 @@ class ReposPresenter(): MvpPresenter<ReposView>() {
             Log.i("disposable_erroe","token == null")
         }
     }
-    fun setRequest(search:String?){
-        Observable.create(ObservableOnSubscribe<String> { subscriber ->
-            subscriber.onNext(search!!)
-        }).debounce(950, TimeUnit.MILLISECONDS)
-            .subscribe {
-                println("$it")
-                //search(token).subscribeWith(getReposList())
-                Log.i("OBSERVER","repos: $it")
-            }
+    fun setRequest(search:String?) {
+        searchTest("${sharedPreferences.getString("TOKEN","")}",search!!).subscribeWith(getReposList())
     }
-
-    init{ Toothpick.inject(this, Toothpick
-            .openScope(AppConstants.APPSCOPE)) }
-
+    init{
+        Toothpick.inject(this, Toothpick
+            .openScope(AppConstants.APPSCOPE))
+    }
     private fun updateRepoList(query:String):DisposableObserver<ReposModel>{
         return object : DisposableObserver<ReposModel>(){
             override fun onNext(t: ReposModel) {
@@ -59,13 +53,20 @@ class ReposPresenter(): MvpPresenter<ReposView>() {
             override fun onComplete() {}
         }
     }
-    private fun getReposList():DisposableObserver<ReposModel>{
-        return object : DisposableObserver<ReposModel>(){
-            override fun onNext(t: ReposModel) {
-                Log.i("disposable_erroe","$t")
-                viewState.getReposlist(t.items) }
-            override fun onError(e: Throwable) { Log.i("disposable_erroe","${e.localizedMessage}")}
-            override fun onComplete() {}
+    private fun getReposList():DisposableSingleObserver<ReposModel>{
+        return object : DisposableSingleObserver<ReposModel>(){
+            override fun onSuccess(t: ReposModel) {  viewState.getReposlist(t.items)  }
+            override fun onError(e: Throwable) {}
+
         }
+    }
+
+    fun saveRepo(item: Item){
+        GlobalScope.launch {
+            userDao.insertAll(DBItem(reposName = item.name,fullname = item.full_name,desc = item.description,fork = item.forks,stars = item.owner.id))
+            Log.i("DB","${userDao.gelAll()}")
+        }
+
+
     }
 }

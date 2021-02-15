@@ -1,4 +1,4 @@
-package com.example.githubapp.view
+package com.example.githubapp.main
 
 import moxy.MvpView
 

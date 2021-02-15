@@ -7,7 +7,6 @@ import android.content.SharedPreferences
 import androidx.room.Room
 import com.example.githubapp.DB.AppDatabase
 import com.example.githubapp.DB.UserDao
-import com.example.githubapp.fragments.BaseFragment
 import io.reactivex.disposables.CompositeDisposable
 import ru.terrakok.cicerone.Cicerone
 import ru.terrakok.cicerone.NavigatorHolder
@@ -30,7 +29,6 @@ fun AppModule(application: Application) = module {
         val cicerone = Cicerone.create()
         bind(Application::class.java).toInstance(application)
         bind(Context::class.java).toInstance(context)
-        bind(BaseFragment::class.java)
         bind(CompositeDisposable::class.java).toInstance(compositeDisposable)
 
         bind(AppDatabase::class.java).toInstance(db)

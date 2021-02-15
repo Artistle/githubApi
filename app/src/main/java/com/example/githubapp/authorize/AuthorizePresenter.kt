@@ -1,25 +1,15 @@
 package com.example.githubapp.authorize
 
-import android.content.Intent
 import android.content.SharedPreferences
-import android.net.Uri
 import android.util.Log
 import com.example.githubapp.DI.AppConstants
 import com.example.githubapp.DI.NavigationModule
 import com.example.githubapp.Screen
 import com.example.githubapp.models.AuthorizedDeviceModel
 import com.example.githubapp.models.VerificationsModel
-import com.example.githubapp.presenter.BasePresenter
-import com.example.githubapp.retrofitApi.ConfigApi
-import com.example.githubapp.retrofitApi.configurations.Authorization.checkToken
-import com.example.githubapp.retrofitApi.configurations.Authorization.getObservable
-import com.example.githubapp.system.FlowRouter
-import io.reactivex.Observable
-import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.observers.DisposableObserver
+import com.example.githubapp.retrofitApi.configurations.AuthorizationConfig.checkToken
+import com.example.githubapp.retrofitApi.configurations.AuthorizationConfig.getObservable
 import io.reactivex.observers.DisposableSingleObserver
-import io.reactivex.schedulers.Schedulers
 import moxy.InjectViewState
 import moxy.MvpPresenter
 import ru.terrakok.cicerone.Router
