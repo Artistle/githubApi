@@ -16,18 +16,18 @@ class ReposFragment:MvpAppCompatFragment(R.layout.repos_fragment),ReposView,Clic
     override fun onStart() {
         super.onStart()
         showToolbar()
-        val searchView = this.activity?.findViewById<SearchView>(R.id.searchView)
+        //val searchView = this.activity?.findViewById<SearchView>(R.id.searchView)
         presenter.q = "s"
-        searchView?.setOnQueryTextListener(object:SearchView.OnQueryTextListener{
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                presenter.setRequest(query)
-                return false
-            }
-            override fun onQueryTextChange(newText: String?): Boolean {
-                presenter.setRequest(newText)
-                return false
-            }
-        })
+//        searchView?.setOnQueryTextListener(object:SearchView.OnQueryTextListener{
+//            override fun onQueryTextSubmit(query: String?): Boolean {
+//                presenter.setRequest(query)
+//                return false
+//            }
+//            override fun onQueryTextChange(newText: String?): Boolean {
+//                presenter.setRequest(newText)
+//                return false
+//            }
+//        })
     }
     override fun getReposlist(repos: List<Item>) {
         recycler = this.activity?.findViewById(R.id.recycler_repos)!!

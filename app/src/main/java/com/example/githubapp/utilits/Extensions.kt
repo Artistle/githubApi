@@ -13,13 +13,13 @@ fun MvpAppCompatFragment.showMessage(context: Context, message:String){
 }
 fun MvpAppCompatFragment.hideToolbar(){
     var toolbar = activity?.findViewById<TabLayout>(R.id.table_layout)
-    var searchView = activity?.findViewById<SearchView>(R.id.search_view)
-    searchView?.visibility = View.GONE
+//    var searchView = activity?.findViewById<SearchView>(R.id.search_view)
+//    searchView?.visibility = View.GONE
     toolbar?.visibility = View.GONE
 }
 fun MvpAppCompatFragment.showToolbar(){
     var toolbar = activity?.findViewById<TabLayout>(R.id.table_layout)
-    var searchView = activity?.findViewById<SearchView>(R.id.search_view)
-    searchView?.visibility = View.GONE
+//    var searchView = activity?.findViewById<SearchView>(R.id.search_view)
+//    searchView?.visibility = View.GONE
     toolbar?.visibility = View.VISIBLE
 }
