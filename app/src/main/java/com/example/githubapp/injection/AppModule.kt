@@ -1,16 +1,14 @@
-package com.example.githubapp.DI
+package com.example.githubapp.injection
 
 import android.app.Application
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 import androidx.room.Room
-import com.example.githubapp.DB.AppDatabase
-import com.example.githubapp.DB.UserDao
+import com.example.githubapp.database.AppDatabase
+import com.example.githubapp.database.ItemDAO
 import io.reactivex.disposables.CompositeDisposable
 import ru.terrakok.cicerone.Cicerone
-import ru.terrakok.cicerone.NavigatorHolder
-import ru.terrakok.cicerone.Router
 import toothpick.ktp.binding.module
 
 fun AppModule(application: Application) = module {
@@ -32,10 +30,5 @@ fun AppModule(application: Application) = module {
         bind(CompositeDisposable::class.java).toInstance(compositeDisposable)
 
         bind(AppDatabase::class.java).toInstance(db)
-        bind(UserDao::class.java).toInstance(dao)
-
-        bind(Router::class.java).toInstance(cicerone.router)
-        bind(NavigatorHolder::class.java).toInstance(cicerone.navigatorHolder)
-        bind(NavigatorHolder::class.java)
-
+        bind(ItemDAO::class.java).toInstance(dao)
 }

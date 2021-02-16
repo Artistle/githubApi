@@ -8,16 +8,16 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 object AuthorizationConfig {
-    fun checkToken(code:String): Single<AuthorizedDeviceModel> {
+    fun tokenObservable(code:String): Single<AuthorizedDeviceModel> {
         return ConfigApi()
-            .authorize()
-            .authorizate(code)
+            .authorizationConfig()
+            .authorization(code)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
     }
-    fun getObservable(): Single<VerificationsModel> {
+    fun verificationObservable(): Single<VerificationsModel> {
         return ConfigApi()
-            .authorize()
+            .authorizationConfig()
             .verification("88080cc156512ce353ce")
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

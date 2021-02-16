@@ -1,11 +1,12 @@
 package com.example.githubapp.repositories
 
-import com.example.githubapp.models.trueModels.Item
+import com.example.githubapp.models.reposModel.Item
 import moxy.MvpView
+import moxy.viewstate.strategy.alias.OneExecution
 import moxy.viewstate.strategy.alias.SingleState
 
 interface ReposView:MvpView {
-    @SingleState
+    @OneExecution
     fun getReposlist(repos:List<Item>)
 
     @SingleState

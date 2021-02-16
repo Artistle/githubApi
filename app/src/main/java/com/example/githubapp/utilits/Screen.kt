@@ -1,13 +1,13 @@
-package com.example.githubapp
+package com.example.githubapp.utilits
 
 import com.example.githubapp.repositories.ReposFragment
 import com.example.githubapp.authorize.AuthorizeFragment
-import com.example.githubapp.saveRepos.SaveReposFragment
+import com.example.githubapp.savedRepos.SaveReposFragment
 import ru.terrakok.cicerone.android.support.SupportAppScreen
 
 
 object Screen {
-    object AuthFlow:SupportAppScreen(){
+    object Authorize:SupportAppScreen(){
         override fun getFragment() = AuthorizeFragment()
     }
     object Repos:SupportAppScreen(){

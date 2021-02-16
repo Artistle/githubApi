@@ -1,9 +1,8 @@
-package com.example.githubapp.DI
+package com.example.githubapp.injection
 
 import ru.terrakok.cicerone.Cicerone
 import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.Router
-import toothpick.config.Module
 import toothpick.ktp.binding.module
 
 fun NavigationModule() = module {

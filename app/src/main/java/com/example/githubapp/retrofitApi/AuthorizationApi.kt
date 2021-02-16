@@ -5,7 +5,7 @@ import com.example.githubapp.models.VerificationsModel
 import io.reactivex.Single
 import retrofit2.http.*
 
-interface AuthorizateApi {
+interface AuthorizationApi {
 
     @Headers("Accept: application/vnd.github.v3+json")
     @FormUrlEncoded
@@ -15,7 +15,7 @@ interface AuthorizateApi {
     @Headers("Accept: application/vnd.github.v3+json")
     @FormUrlEncoded
     @POST("login/oauth/access_token")
-    fun authorizate(
+    fun authorization(
         @Field("device_code") deviceCode:String,
         @Field("client_id") clientId:String = "88080cc156512ce353ce",
         @Field("grant_type") grantType:String = "urn:ietf:params:oauth:grant-type:device_code"

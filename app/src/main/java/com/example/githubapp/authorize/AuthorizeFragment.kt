@@ -2,13 +2,12 @@ package com.example.githubapp.authorize
 
 import android.content.Intent
 import android.net.Uri
-import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import com.example.githubapp.R
 import com.example.githubapp.models.VerificationsModel
-import com.example.githubapp.utils.hideToolbar
-import com.example.githubapp.utils.showMessage
+import com.example.githubapp.utilits.hideToolbar
+import com.example.githubapp.utilits.showMessage
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 
@@ -26,21 +25,10 @@ class AuthorizeFragment:MvpAppCompatFragment(R.layout.authorize_fragment),Author
         authorizeGmail?.setOnClickListener {showMessage(this.context!!,"в процессе реализации")}
         authorizeGuest?.setOnClickListener {}
         hideToolbar()
-//        Log.i("OBSERVER","ee")
-//        getObservable().subscribeWith(getObserver())
-
-        Log.i("OBSERVER","onStart")
         authorizePresenter.getToken()
     }
-
-
-
-    override fun onResume() {
-        super.onResume()
-    }
-
-    override fun startCheck(code: VerificationsModel) {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(code.verification_uri))
+    override fun checkCode(code: String) {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(code))
         startActivityForResult(intent,101)
     }
 

@@ -7,27 +7,13 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
 class ConfigApi {
-    fun authorize() = Retrofit.Builder()
+    fun authorizationConfig() = Retrofit.Builder()
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .baseUrl("https://github.com/")
         .addConverterFactory(GsonConverterFactory.create())
-        .build().create(AuthorizateApi::class.java)
+        .build().create(AuthorizationApi::class.java)
 
-//    val httpClient = OkHttpClient.Builder().addInterceptor {
-//        var request: Request = it.request().newBuilder().addHeader("", "").build()
-//        return@addInterceptor it.proceed(request)
-//    }
-
-
-
-    fun search(token:String) = Retrofit.Builder()
-        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-        .baseUrl("https://api.github.com/")
-        .client(interceptor(token).build())
-        .addConverterFactory(GsonConverterFactory.create())
-        .build().create(SearchReposApi::class.java)
-
-    fun searchTest(token:String) = Retrofit.Builder()
+    fun searchConfig(token:String) = Retrofit.Builder()
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .baseUrl("https://api.github.com/")
         .client(interceptor(token).build())

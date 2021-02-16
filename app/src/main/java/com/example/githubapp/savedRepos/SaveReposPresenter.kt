@@ -1,17 +1,10 @@
-package com.example.githubapp.saveRepos
+package com.example.githubapp.savedRepos
 
 import android.util.Log
-import com.example.githubapp.DB.DBItem
-import com.example.githubapp.DB.UserDao
-import com.example.githubapp.DI.AppConstants
-import com.example.githubapp.models.trueModels.Item
-import com.example.githubapp.models.trueModels.ReposModel
-import io.reactivex.Flowable
-import io.reactivex.Single
+import com.example.githubapp.database.DBItem
+import com.example.githubapp.database.ItemDAO
+import com.example.githubapp.injection.AppConstants
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
-import io.reactivex.observers.DisposableSingleObserver
-import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import moxy.InjectViewState
@@ -22,8 +15,10 @@ import javax.inject.Inject
 @InjectViewState
 class SaveReposPresenter:MvpPresenter<SaveReposView>() {
 
+
     @Inject
-    lateinit var userDao: UserDao
+    lateinit var userDao: ItemDAO
+
 
     init{
         Toothpick.inject(this, Toothpick
@@ -44,5 +39,32 @@ class SaveReposPresenter:MvpPresenter<SaveReposView>() {
                 },{
                     Log.i("DB","ERROR LOAD FROM DATABASE")
                 })
+    }
+
+    fun deleteAll(){
+        GlobalScope.launch {
+            userDao.deleteAll()
+        }
+    }
+    fun delete(item:DBItem){
+        GlobalScope.launch {
+            userDao.delete(item)
+        }
+    }
+    fun searchRepo(name:String){
+        if(name.isNullOrBlank()){
+            getSingle()
+        }else{
+            userDao.searchRepos(name)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    viewState.setList(it)
+                    Log.i("DB","$it")
+                },{
+
+                })
+        }
+
+
     }
 }

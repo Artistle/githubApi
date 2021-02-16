@@ -1,4 +1,4 @@
-package com.example.githubapp.models.trueModels
+package com.example.githubapp.models.reposModel
 
 data class Owner(
     val avatar_url: String,
