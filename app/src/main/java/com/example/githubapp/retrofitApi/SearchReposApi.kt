@@ -11,4 +11,5 @@ interface SearchReposApi {
     fun getRepositories(@Query("q")q:String,
                         @Query("page")page:Long=1,
                         @Query("per_page")perPage:Int=10): Single<ReposModel>
+
 }

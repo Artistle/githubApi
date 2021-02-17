@@ -52,6 +52,5 @@ class MainPresenter():MvpPresenter<MainView>() {
     fun onBackPressed(){}
     fun replaceFavorites(){router.navigateTo(Screen.SaveRepos)}
     fun replaceRepos(){ router.navigateTo(Screen.Repos) }
-    fun replaceAccount(){  }
     fun replaceAuthorize(){ router.navigateTo(Screen.Authorize) }
 }

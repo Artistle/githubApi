@@ -6,13 +6,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 object SearchConfig{
-//    fun search(token:String): Observable<ReposModel> {
-//        return ConfigApi()
-//            .search(token)
-//            .getRepositories()
-//            .subscribeOn(Schedulers.io())
-//            .observeOn(AndroidSchedulers.mainThread())
-//    }
     fun searchObservable(token:String, query:String): Single<ReposModel> {
         return ConfigApi()
             .searchConfig(token)

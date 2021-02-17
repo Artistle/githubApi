@@ -1,14 +1,17 @@
 package com.example.githubapp.database
 
+import androidx.paging.DataSource
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import com.example.githubapp.models.reposModel.Item
 import io.reactivex.Flowable
 
 @Dao
 interface ItemDAO{
     @Query("SELECT * FROM dbitem")
+    //fun gelAll():DataSource.Factory<Int,Item>
     fun gelAll():Flowable<List<DBItem>>
 
     @Query("SELECT * FROM dbitem WHERE repository_name LIKE :reposName")
